@@ -7,6 +7,7 @@
       get_template_part('content');
     endwhile;
   endif;
+  
 ?>
     </section><!-- #contents end -->
       <?php get_sidebar(); ?>
