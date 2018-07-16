@@ -99,4 +99,33 @@ function pickup_excerpt_length() {
   return 50;
 }
 
+//カテゴリー画像の表示
+//アイキャッチ画像が設定されている場合は、アイキャッチ画像を使用
+//アイキャッチ画像が設定されていない固定ページで、最上位の固定ページにアイキャッチが設定されている場合はそれを使用
+//それ以外はdefaultの画像を使用
+
+function the_category_image() {
+  global $post;
+  $image = "";
+
+  if (is_singular() && has_post_thumbnail()) {
+    $image = get_the_post_thumbnail(null, 'category_image', array('id' => 'category_image'));
+  } elseif (is_page() && has_post_thumbnail(array_pop(get_post_ancestors($post)))) {
+    $image = get_the_post_thumbnail(array_pop(get_post_ancestors($post)), 'category_image', array('id'=>'category_image'));
+  }
+  if ($image == "") {
+    $src = get_template_directory_uri() . '/images/category/default.jpg';
+    $image = '<img src="'. $src. '"class="attachment-category_image wp-post-image" alt="" id="category_image" />';
+  }
+  echo $image;
+}
+
+//コラムカテゴリーのみコメント出来る様にする
+function comments_allow_only_column($open, $post_id) {
+  if(!in_category('column')) {
+    $open = false;
+  }
+  return $open;
+}
+add_filter('comments_open', 'comments_allow_only_column', 10, 2);
 ?>
