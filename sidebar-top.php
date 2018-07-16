@@ -10,6 +10,7 @@ $sidebar_cat_list = array(
 'information' => 2,
 );
 
+
 foreach ($sidebar_cat_list as $sidebar_cat_name => $sidebar_cat_num) :
 $sidebar_posts = new WP_Query('posts_per_page=' . $sidebar_cat_num . '&category_name=' . $sidebar_cat_name);
 ?>          <aside id="<?php echo $sidebar_cat_name; ?>-info" class="news-list">
