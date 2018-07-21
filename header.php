@@ -2,7 +2,25 @@
 <html dir="ltr" lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><?php bloginfo('name'); ?></title>
+<title>
+<?php
+global $page, $paged;
+if(is_search()) :
+wp_title('', true, 'left');
+echo ' | ';
+else :
+wp_title('|', true, 'right');
+endif;
+bloginfo('name');
+if(is_front_page()) :
+echo ' | ';
+bloginfo('description');
+endif;
+if($paged >= 2 || $page >= 2) :
+echo ' | '.sprintf('%sページ', max($paged,$page));
+endif;
+?>
+</title>
 <link rel="apple-touch-icon" href="./images/touch-icon.png" />
 <link rel="shortcut icon" href="./images/favicon.ico" />
 <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo('stylesheet_url'); ?>" />
